@@ -35,25 +35,25 @@ most-freq-word
 
 ;; catalan with combinatoric method
 (defn catalan ^PersistentList [^Number n]
-  (if (<= n 0) (set [""])
-      (if (= n 1) (set ["ab"])
-          (->> (range n)
-               (map #(for [lhs (catalan %)
-                           rhs (catalan (- (- n %) 1))]
-                       [(str "a" lhs "b" rhs)]))
-               (flatten)
-               (set)))))
+  (case n
+    0 #{""}
+    1 #{"ab"}
+    (->> (for [i   (range n)
+               lhs (catalan i)
+               rhs (catalan (- n i 1))]
+           (str "a" lhs "b" rhs))
+         (set))))
 
 
 ;; catalan with counting recursive
 (defn catalan2 ^PersistentList
   ([^Number n] (catalan2 (* n 2) 0))
   ([^Number len, ^Number up]
-   (set
-    (if (= len 0) [""]
-        (concat
-         (if (> up 0)   (for [nx (catalan2 (- len 1) (- up 1))]  (str "b" nx)) `())
-         (if (> len up) (for [nx (catalan2 (- len 1) (+ up 1))]  (str "a" nx)) `()))))))
+   (if (= len 0)
+     (set `(""))
+     (set (concat
+           (if (> up 0)   (map #(str "b" %) (catalan2 (- len 1) (- up 1))) `())
+           (if (> len up) (map #(str "a" %) (catalan2 (- len 1) (+ up 1))) `()))))))
 
 
 (def catalan3 (memoize catalan))
