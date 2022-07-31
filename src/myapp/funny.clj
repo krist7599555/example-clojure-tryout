@@ -1,5 +1,6 @@
 #!/usr/bin/env clj -M
-(ns main (:import clojure.lang.LazySeq clojure.lang.PersistentList java.util.List))
+(ns myapp.funny
+  (:import clojure.lang.LazySeq clojure.lang.PersistentList java.util.List))
 
 (def author "krist7599555")
 (def primes '(2 3 5 7 11 13 15 17 19 23 29))
@@ -15,6 +16,7 @@
 ;; (println book)
 
 (println (take 10 (fib)))
+(take 10 (fib))
 
 (def a `("a" "b" "c"))
 (def b `("A" "B" "C"))
@@ -22,7 +24,7 @@
 (println (for [lhs a rhs b] (str lhs rhs)))
 
 ;; catalan with combinatoric method
-(defn catalan ^List [^Number n]
+(defn catalan ^PersistentList [^Number n]
   (if (<= n 0) (set [""])
       (if (= n 1) (set ["ab"])
           (->> (range n)
@@ -34,7 +36,7 @@
 
 
 ;; catalan with counting recursive
-(defn catalan2 ^List
+(defn catalan2 ^PersistentList
   ([^Number n] (catalan2 (* n 2) 0))
   ([^Number len, ^Number up]
    (set
@@ -50,6 +52,7 @@
   (let [res1 (catalan i) res2 (catalan2 i) res3 (catalan3 i)]
     (println "catalan" i "=" (count res1) "; is equal" (= res1 res2 res3))))
 
+(catalan3 7)
 
 ;; BASIC HELLO WORLD
 ;; (println author (hello))
