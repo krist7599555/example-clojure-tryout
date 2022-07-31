@@ -1,12 +1,12 @@
 #!/usr/bin/env clj -M
-(ns main)
+(ns main (:import clojure.lang.LazySeq clojure.lang.PersistentList java.util.List))
 
 (def author "krist7599555")
 (def primes '(2 3 5 7 11 13 15 17 19 23 29))
 (defn hello [] "Hello, World!")
 
 ;; fibonucci lazy list
-(defn fib ^lang.List<Number>
+(defn fib ^LazySeq
   ([] (fib 1 1))
   ([a b] (lazy-seq (cons a (fib b (+ a b))))))
 
@@ -22,7 +22,7 @@
 (println (for [lhs a rhs b] (str lhs rhs)))
 
 ;; catalan with combinatoric method
-(defn catalan ^lang.Set<String> [^Number n]
+(defn catalan ^List [^Number n]
   (if (<= n 0) (set [""])
       (if (= n 1) (set ["ab"])
           (->> (range n)
@@ -34,7 +34,7 @@
 
 
 ;; catalan with counting recursive
-(defn catalan2 ^lang.Set<String>
+(defn catalan2 ^List
   ([^Number n] (catalan2 (* n 2) 0))
   ([^Number len, ^Number up]
    (set
