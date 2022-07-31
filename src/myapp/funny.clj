@@ -21,7 +21,6 @@
 (def a `("a" "b" "c"))
 (def b `("A" "B" "C"))
 (println a)
-(println (for [lhs a rhs b] (str lhs rhs)))
 
 ;; catalan with combinatoric method
 (defn catalan ^PersistentList [^Number n]
@@ -57,3 +56,6 @@
 ;; BASIC HELLO WORLD
 ;; (println author (hello))
 ;; (println "prime numbers =" primes)
+(hello)
+
+"HWLLOWORLD"
