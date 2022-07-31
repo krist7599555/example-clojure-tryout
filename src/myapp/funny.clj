@@ -1,6 +1,8 @@
 #!/usr/bin/env clj -M
-(ns myapp.funny
-  (:import clojure.lang.LazySeq clojure.lang.PersistentList clojure.lang.PersistentHashSet))
+(ns myapp.funny)
+(import '[clojure.lang LazySeq PersistentList PersistentHashSet])
+(import '[java.util HashMap HashSet])
+
 
 (require '[clojure.string :as str])
 (require '[clojure.pprint])
