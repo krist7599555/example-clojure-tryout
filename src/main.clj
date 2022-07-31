@@ -6,7 +6,7 @@
 (defn hello [] "Hello, World!")
 
 ;; fibonucci lazy list
-(defn fib
+(defn fib ^lang.List<Number>
   ([] (fib 1 1))
   ([a b] (lazy-seq (cons a (fib b (+ a b))))))
 
@@ -22,7 +22,7 @@
 (println (for [lhs a rhs b] (str lhs rhs)))
 
 ;; catalan with combinatoric method
-(defn catalan [n]
+(defn catalan ^lang.Set<String> [^Number n]
   (if (<= n 0) (set [""])
       (if (= n 1) (set ["ab"])
           (->> (range n)
@@ -34,9 +34,9 @@
 
 
 ;; catalan with counting recursive
-(defn catalan2
-  ([n] (catalan2 (* n 2) 0))
-  ([len, up]
+(defn catalan2 ^lang.Set<String>
+  ([^Number n] (catalan2 (* n 2) 0))
+  ([^Number len, ^Number up]
    (set
     (if (= len 0) [""]
         (concat
