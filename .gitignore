@@ -14,3 +14,6 @@ pom.xml.asc
 .clj-kondo
 .lsp/.cache
 .clj-kondo/.cache/v1
+.calva
+/.clj-kondo
+.lsp

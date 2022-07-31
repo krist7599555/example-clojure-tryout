@@ -1,10 +1,9 @@
 #!/usr/bin/env clj -M
 (ns myapp.funny
-  (:import clojure.lang.LazySeq clojure.lang.PersistentList java.util.List))
+  (:import clojure.lang.LazySeq clojure.lang.PersistentList clojure.lang.PersistentHashSet))
 
-(def author "krist7599555")
-(def primes '(2 3 5 7 11 13 15 17 19 23 29))
-(defn hello [] "Hello, World!")
+(require '[clojure.string :as str])
+(require '[clojure.pprint])
 
 ;; fibonucci lazy list
 (defn fib ^LazySeq
@@ -12,15 +11,27 @@
   ([a b] (lazy-seq (cons a (fib b (+ a b))))))
 
 ;; curl to text Alice's Adventures in Wonderland by Lewis Carroll
-;; (def book (slurp "https://www.gutenberg.org/files/11/11-0.txt"))
+(def book ^String (slurp "https://www.gutenberg.org/files/11/11-0.txt"))
+(def common-word ^PersistentHashSet
+  (->> (slurp "https://gist.githubusercontent.com/deekayen/4148741/raw/98d35708fa344717d8eee15d11987de6c8e26d7d/1-1000.txt")
+       (str/lower-case)
+       (re-seq #"\S+")
+       (set)))
+(take 40 common-word)
+(clojure.pprint/pp)
+
 ;; (println book)
+(def most-freq-word ^PersistentHashSet
+  (->> (re-seq #"\S+" book)
+       (map str/lower-case)
+       (remove common-word)
+       (frequencies)
+       (sort-by val)
+       (take-last 10)))
+most-freq-word
+(clojure.pprint/pp)
 
-(println (take 10 (fib)))
-(take 10 (fib))
-
-(def a `("a" "b" "c"))
-(def b `("A" "B" "C"))
-(println a)
+(take 45 (fib))
 
 ;; catalan with combinatoric method
 (defn catalan ^PersistentList [^Number n]
@@ -51,11 +62,3 @@
   (let [res1 (catalan i) res2 (catalan2 i) res3 (catalan3 i)]
     (println "catalan" i "=" (count res1) "; is equal" (= res1 res2 res3))))
 
-(catalan3 7)
-
-;; BASIC HELLO WORLD
-;; (println author (hello))
-;; (println "prime numbers =" primes)
-(hello)
-
-"HWLLOWORLD"
