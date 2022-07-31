@@ -26,7 +26,8 @@
   (if (<= n 0) (set [""])
       (if (= n 1) (set ["ab"])
           (->> (range n)
-               (map #(for [lhs (catalan %), rhs (catalan (- (- n %) 1))]
+               (map #(for [lhs (catalan %)
+                           rhs (catalan (- (- n %) 1))]
                        [(str "a" lhs "b" rhs)]))
                (flatten)
                (set)))))
